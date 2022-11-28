@@ -1,21 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const SignUp = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { createUser } = useContext(AuthContext);
+    const { createUser, updateUser } = useContext(AuthContext);
+    const [signUpError, setSignUpError] = useState('');
 
     const handleSignUp = data => {
         console.log(data);
+        setSignUpError('');
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                toast('user created successfully');
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => { })
+                    .catch(error => console.log(error));
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error);
+                setSignUpError(error.message);
+            });
     }
 
     return (
@@ -67,6 +80,7 @@ const SignUp = () => {
                     </select> */}
 
                     <input className='btn btn-active w-full mt-4' value="Sign Up" type="submit" />
+                    {signUpError && <p className='text-red-600'>{signUpError}</p>}
                 </form>
                 <p className='my-2'>Already have an account?<Link className='text-primary font-bold' to="/login">Please Login</Link></p>
                 <button className='btn btn-outline w-full'>Continue with Google</button>
