@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../../contexts/AuthProvider';
 
 const BookingModal = ({ service, setService }) => {
 
     const { product_name, resale_price } = service;
+
+    const { user } = useContext(AuthContext);
+    // console.log(user);
 
     const handleBooking = event => {
         event.preventDefault();
@@ -22,7 +27,23 @@ const BookingModal = ({ service, setService }) => {
         }
 
         console.log(booking);
-        setService(null);
+        // setService(null);
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    setService(null);
+                    toast.success('booking confirmed');
+                }
+            })
+
     }
     return (
 
@@ -34,8 +55,9 @@ const BookingModal = ({ service, setService }) => {
                     <h3 className="text-lg font-bold">{product_name}</h3>
 
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-3 mt-10'>
-                        <input name='name' type="text" placeholder="Enter Your Name" className="input w-full input-bordered" />
-                        <input name='email' type="text" placeholder="Enter Your Email" className="input w-full input-bordered" />
+                        <input name='name' type="text" defaultValue={user?.displayName
+                        } readOnly disabled placeholder="Enter Your Name" className="input w-full input-bordered" />
+                        <input name='email' type="text" defaultValue={user?.email} readOnly disabled placeholder="Enter Your Email" className="input w-full input-bordered" />
                         <input type="text" value={resale_price} disabled className="input w-full input-bordered" />
 
                         <input name='phone' type="text" placeholder="Enter your phone number" className="input w-full input-bordered" />

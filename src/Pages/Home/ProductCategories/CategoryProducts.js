@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import BookingModal from './BookingModal';
@@ -7,6 +8,7 @@ const CategoryProducts = () => {
 
     const products = useLoaderData();
     console.log(products);
+
 
     const [service, setService] = useState(null);
 

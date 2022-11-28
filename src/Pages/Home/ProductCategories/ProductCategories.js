@@ -1,20 +1,32 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 
 const ProductCategories = () => {
 
-    const [productCategories, setProductCategories] = useState([]);
+    // const [productCategories, setProductCategories] = useState([]);
     // const products = useLoaderData();
     // console.log(products);
 
-    useEffect(() => {
-        fetch('http://localhost:5000/categories')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setProductCategories(data)
-            })
-    }, [])
+
+    const { data: productCategories = [] } = useQuery({
+        queryKey: ['productCategories'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/categories');
+            const data = await res.json();
+            return data;
+
+        }
+    })
+
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/categories')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             setProductCategories(data)
+    //         })
+    // }, [])
 
     return (
         <div className='my-16'>
