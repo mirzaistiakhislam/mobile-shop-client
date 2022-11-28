@@ -4,8 +4,8 @@ const CategoryProduct = ({ product, setService }) => {
     return (
         <div>
 
-            <div className="card lg:card-side bg-base-100 shadow-xl">
-                <figure><img src={product.product_image} alt="Album" className='w-96' /></figure>
+            <div className="card lg:card-side shadow-xl">
+                <figure><img src={product.product_image} alt="Album" className='w-96 border-2 border-rose-500' /></figure>
                 <div className="card-body">
                     <h2 className="card-title">{product.product_name}</h2>
                     <h2 className="card-title">Location: {product.location}</h2>
