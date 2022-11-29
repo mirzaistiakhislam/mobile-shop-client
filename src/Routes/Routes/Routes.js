@@ -6,6 +6,8 @@ import CategoryProducts from "../../Pages/Home/ProductCategories/CategoryProduct
 import SignUp from "../../Pages/SignUp/SignUp";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import DashboardLayout from "../../Layout/DashboardLayout";
+import MyBookings from "../../Pages/Dashboard/MyBookings/MyBookings";
 
 const router = createBrowserRouter([
     {
@@ -33,7 +35,13 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <MyBookings></MyBookings>
+            }
+        ]
     }
 ])
 
