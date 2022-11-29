@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import Loading from '../../Shared/Loading/Loading';
 
 const AddProduct = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const imageHostKey = process.env.REACT_APP_imgbb_key;
@@ -22,7 +23,7 @@ const AddProduct = () => {
     });
 
     if (isLoading) {
-        return <Loading></Loading>
+        return <div className='mt-40'><Loading></Loading></div>
     }
     function formatDate(date) {
         var hours = date.getHours();
@@ -36,6 +37,7 @@ const AddProduct = () => {
     }
 
     const handleAdd = (data) => {
+        setLoading(true)
         data['authorName'] = user?.displayName;
         const date = new Date();
         data['publishedDate'] = formatDate(date);
@@ -72,6 +74,7 @@ const AddProduct = () => {
                         .then(res => res.json())
                         .then(result => {
                             if (result.acknowledged) {
+                                setLoading(false)
                                 toast.success('New Product Successfully Added!');
                                 navigate('/dashboard/myproducts');
                             }
@@ -80,11 +83,14 @@ const AddProduct = () => {
             })
     }
     return (
-        <div className='pb-8'>
+        <div className='pb-8 w-[98%] mx-auto'>
             <h3 className='text-3xl mb-6 py-6 font-bold text-center'>Add Product</h3>
             <div className='flex justify-center '>
                 <div className='w-[90%] mx-auto p-7 shadow'>
                     <form className='flex flex-col gap-3' onSubmit={handleSubmit(handleAdd)}>
+                        {
+                            loading && <Loading></Loading>
+                        }
                         <div className="form-control w-full ">
                             <label className="label">
                                 <span className="label-text">Product Name</span>

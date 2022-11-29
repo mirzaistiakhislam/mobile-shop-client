@@ -8,20 +8,19 @@ const MyProduct = () => {
 
     const url = `http://localhost:5000/myproducts/${user?.email}`;
 
-    const { data: myproducts = null,refetch } = useQuery({
+    const { data: myproducts = null, refetch } = useQuery({
         queryKey: ['myproducts', user?.email],
         queryFn: async () => {
             const res = await fetch(url);
             const data = await res.json();
             return data;
-
         }
     })
     const deleteProduct = (id) => {
         const data = {
             id: id
         }
-    
+
         fetch(`http://localhost:5000/deleteproduct`, {
             method: 'DELETE',
             headers: {
@@ -34,16 +33,36 @@ const MyProduct = () => {
                 if (data.deletedCount > 0) {
                     toast.success('Delete Successfully!')
                 }
-              
+
                 refetch()
             })
 
     }
 
+    const advertiseProduct = (id) => {
+        const data = {
+            id: id
+        }
 
+        fetch(`http://localhost:5000/makeadvertise`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    toast.success('Advertise Successfully!')
+                }
+                refetch()
+            })
+
+    }
 
     return (
-        <div>
+        <div className='w-[98%] mx-auto'>
             <h3 className='text-3xl mb-6 py-6 font-bold text-center'>My Products</h3>
             {
                 myproducts && myproducts?.length > 0 ? <div className="overflow-x-auto">
@@ -72,7 +91,7 @@ const MyProduct = () => {
                                         <td>{product.resalePrice}</td>
                                         <td>{product.salesStatus}</td>
                                         <td>{
-                                            product.advertise == 'No' ? <button className='btn btn-success btn-sm'>Make Advertise</button> : <p className='text-green-500 font-semibold'>Advertised</p>
+                                            product.advertise == 'No' ? <button onClick={() => advertiseProduct(product._id)} className='btn btn-success btn-sm'>Make Advertise</button> : <p className='text-green-500 font-semibold'>Advertised</p>
                                         }</td>
                                         <td><button onClick={() => deleteProduct(product._id)} className='btn btn-warning btn-sm '>Delete</button></td>
                                     </tr>)
