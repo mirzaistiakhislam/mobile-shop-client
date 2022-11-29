@@ -39,7 +39,7 @@ const SignUp = () => {
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                toast('user created successfully');
+                toast.success('user created successfully');
                 const userInfo = {
                     displayName: data.name
                 }

@@ -1,27 +1,44 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../../contexts/AuthProvider';
+import useUserType from '../../../Hooks/useUserType';
 
-const CategoryProduct = ({ product, setService }) => {
+const CategoryProduct = ({ product, setBookingProduct }) => {
+
+    const { user } = useContext(AuthContext);
+    const [userType] = useUserType(user?.email);
+    const reportItem = (product) => {
+    
+}
+
+    const { _id, image, location, resalePrice, originalPrice, publishedDate, description, authorName, purchaseYear, usedYear } = product;
     return (
-        <div>
-
-            <div className="card lg:card-side shadow-xl">
-                <figure><img src={product.product_image} alt="Album" className='w-96 border-2 border-rose-500' /></figure>
+        <div >
+            <div className="card  shadow-xl flex flex-col gap-4">
+                <figure><img src={image} alt="Album" className=' rounded border-2 border-rose-500' /></figure>
                 <div className="card-body">
-                    <h2 className="card-title">{product.product_name}</h2>
-                    <h2 className="card-title">Location: {product.location}</h2>
-                    <h2 className="card-title">Resale Price: {product.resale_price}</h2>
-                    <h2 className="card-title">Original Price: {product.original_price}</h2>
-                    <h2 className="card-title">Purchase Year: {product.purchase_year}</h2>
-                    <h2 className="card-title">Posted Time: {product.posted_date}</h2>
-                    <h2 className="card-title">Reseller Name: {product.reseller_name}</h2>
-                    <p>{product.description}</p>
-                    <div className="card-actions justify-end">
-                        <label
-                            htmlFor="booking-modal"
-                            className="btn btn-primary"
-                            onClick={() => setService(product)}
-                        >Book Now</label>
-                    </div>
+                    <h2 className='text-xl'><span className='text-xl font-bold'>Author Name:</span> {authorName}</h2>
+                    <h2 className='text-xl'><span className='text-xl font-bold'>Product Name:</span> {product.productName}</h2>
+                    <h2 className='text-xl'><span className='text-xl font-bold'>Location:</span> {location}</h2>
+                    <h2 className='text-xl'><span className='text-xl font-bold'>Resale Price:</span> {resalePrice}</h2>
+                    <h2 className='text-xl'><span className='text-xl font-bold'>Original Price:</span> {originalPrice}</h2>
+                    <h2 className='text-xl'><span className='text-xl font-bold'>Purchase Year:</span> {purchaseYear}</h2>
+                    <h2 className='text-xl'><span className='text-xl font-bold'>Used of Years:</span> {usedYear}</h2>
+                    <h2 className='text-xl'><span className='text-xl font-bold'>Posted Time:</span> {publishedDate}</h2>
+
+                    <p className='text-xl'><span className='text-xl font-bold'>Description:</span> {product.description}</p>
+                    {
+                        userType === 'Buyer' && <div className="card-actions grid grid-cols-2 mt-3">
+                            <label
+                                htmlFor="booking-modal"
+                                className="btn btn-primary"
+                                onClick={() => setBookingProduct(product)}
+                            >Book Now</label>
+                            <button
+                                className="btn btn-warning"
+                                onClick={() => reportItem(product)}
+                            >Report This Item</button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

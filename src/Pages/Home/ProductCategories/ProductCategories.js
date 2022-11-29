@@ -34,11 +34,16 @@ const ProductCategories = () => {
     // }, [])
 
     return (
-        <div className='my-16'>
-            <h2 className='text-4xl mb-6'>Product Categories</h2>
-            <div>
+        <div className='my-16 w-[95%] mx-auto'>
+            <h2 className='text-4xl font-semibold mb-6'>Product Categories</h2>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                 {
-                    productCategories.map(productCategory => <button className="btn btn-outline w-full" key={productCategory._id}><Link to={`/categoryproducts/${productCategory._id}`}>{productCategory.category_name}</Link></button>
+                    productCategories?.map(productCategory =>
+                        <Link key={productCategory._id}
+                            to={`/category/${productCategory._id}`}>
+                            <button className="btn btn-outline w-full" >{productCategory.category_name}</button>
+                        </Link>
+
                     )
                 }
             </div>

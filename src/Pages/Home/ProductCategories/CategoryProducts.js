@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import BookingModal from './BookingModal';
@@ -7,28 +6,30 @@ import CategoryProduct from './CategoryProduct';
 const CategoryProducts = () => {
 
     const products = useLoaderData();
-    console.log(products);
-
-
-    const [service, setService] = useState(null);
+    const categoryName = products[0]?.categoryName;
+    const [bookingProduct, setBookingProduct] = useState(null);
 
     return (
-        <div>
+        <div className='w-[98%] mx-auto py-6'>
+            <h3 className='text-3xl mb-6 py-6 font-bold text-center'>Products by <span className='text-primary'>{ categoryName}</span> </h3>
+            <div className='grid grdi-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
             {
                 products.map(product => <CategoryProduct
                     key={product._id}
                     product={product}
-                    setService={setService}
+                    setBookingProduct={setBookingProduct}
                 ></CategoryProduct>)
             }
             {
-                service &&
+                bookingProduct &&
                 <BookingModal
-                    service={service}
-                    setService={setService}
+                    bookingProduct={bookingProduct}
+                    setBookingProduct={setBookingProduct}
                 ></BookingModal>
             }
         </div>
+        </div>
+        
     );
 };
 

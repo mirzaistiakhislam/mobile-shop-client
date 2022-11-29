@@ -2,12 +2,10 @@ import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
-const BookingModal = ({ service, setService }) => {
+const BookingModal = ({ bookingProduct, setBookingProduct }) => {
 
-    const { product_name, resale_price } = service;
-
+    const { productName, resalePrice, _id } = bookingProduct;
     const { user } = useContext(AuthContext);
-    // console.log(user);
 
     const handleBooking = event => {
         event.preventDefault();
@@ -18,16 +16,16 @@ const BookingModal = ({ service, setService }) => {
         const location = form.location.value;
 
         const booking = {
-            product_name: product_name,
-            buyer_name: name,
-            resale_price: resale_price,
+            productName: productName,
+            buyerName: name,
+            resalePrice: resalePrice,
+            productId: _id,
+            payment: 'No',
             email,
             phone,
             location
         }
-
-        console.log(booking);
-        // setService(null);
+        console.log(booking)
         fetch('http://localhost:5000/bookings', {
             method: 'POST',
             headers: {
@@ -37,10 +35,13 @@ const BookingModal = ({ service, setService }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.acknowledged) {
-                    setService(null);
-                    toast.success('booking confirmed');
+                    setBookingProduct(null);
+                    toast.success('Booking confirmed');
+                }
+                if (data.status) {
+                    setBookingProduct(null);
+                    toast.error(data.status)
                 }
             })
 
@@ -52,16 +53,17 @@ const BookingModal = ({ service, setService }) => {
             <div className="modal">
                 <div className="modal-box relative">
                     <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <h3 className="text-lg font-bold">{product_name}</h3>
+                    <h3 className="text-lg font-bold">{productName}</h3>
 
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-3 mt-10'>
                         <input name='name' type="text" defaultValue={user?.displayName
                         } readOnly disabled placeholder="Enter Your Name" className="input w-full input-bordered" />
                         <input name='email' type="text" defaultValue={user?.email} readOnly disabled placeholder="Enter Your Email" className="input w-full input-bordered" />
-                        <input type="text" value={resale_price} disabled className="input w-full input-bordered" />
+                        <input type="text" value={productName} disabled className="input w-full input-bordered" />
+                        <input type="text" value={resalePrice} disabled className="input w-full input-bordered" />
 
-                        <input name='phone' type="text" placeholder="Enter your phone number" className="input w-full input-bordered" />
-                        <input name='location' type="text" placeholder="Enter your meeting location" className="input w-full input-bordered" />
+                        <input name='phone' type="text" placeholder="Enter your phone number" className="input w-full input-bordered" required />
+                        <input name='location' type="text" placeholder="Enter your meeting location" className="input w-full input-bordered" required />
                         <br />
                         <input className='w-full btn btn-active' type="submit" value="Submit" />
                     </form>
