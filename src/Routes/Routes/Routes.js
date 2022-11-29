@@ -1,13 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
-import Main from "../../Layout/Main";
-import Home from "../../Pages/Home/Home/Home";
-import Login from "../../Pages/Login/Login";
-import CategoryProducts from "../../Pages/Home/ProductCategories/CategoryProducts";
-import SignUp from "../../Pages/SignUp/SignUp";
-import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import DashboardLayout from "../../Layout/DashboardLayout";
-import MyBookings from "../../Pages/Dashboard/MyBookings/MyBookings";
+import Main from "../../Layout/Main";
+import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
+import AllBuyer from "../../Pages/Dashboard/AllBuyer/AllBuyer";
+import AllSeller from "../../Pages/Dashboard/AllSeller.js/AllSeller";
+import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
+import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
+import MyProduct from "../../Pages/Dashboard/MyProduct/MyProduct";
+import ReportedItems from "../../Pages/Dashboard/ReportedItems/ReportedItems";
+import Home from "../../Pages/Home/Home/Home";
+import CategoryProducts from "../../Pages/Home/ProductCategories/CategoryProducts";
+import Login from "../../Pages/Login/Login";
+import SignUp from "../../Pages/SignUp/SignUp";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -39,8 +44,32 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element: <MyBookings></MyBookings>
-            }
+                element: <Dashboard></Dashboard>
+            },
+            {
+                path: '/dashboard/myorders',
+                element: <MyOrders></MyOrders>
+            },
+            {
+                path: '/dashboard/allseller',
+                element: <AllSeller></AllSeller>
+            },
+            {
+                path: '/dashboard/allbuyer',
+                element: <AllBuyer></AllBuyer>
+            },
+            {
+                path: '/dashboard/myproducts',
+                element: <MyProduct></MyProduct>
+            },
+            {
+                path: '/dashboard/addproduct',
+                element: <AddProduct></AddProduct>
+            },
+            {
+                path: '/dashboard/reporteditems',
+                element: <ReportedItems></ReportedItems>
+            },
         ]
     }
 ])

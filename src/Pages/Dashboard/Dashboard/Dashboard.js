@@ -2,8 +2,8 @@ import React from 'react';
 
 const Dashboard = () => {
     return (
-        <div>
-            comming soon
+        <div className='flex text-3xl font-semibold p-8 items-center justify-center'>
+             Welcome to Dashboard.
         </div>
     );
 };

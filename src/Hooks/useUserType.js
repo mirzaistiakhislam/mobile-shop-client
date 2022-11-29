@@ -10,13 +10,10 @@ const useUserType = email => {
             fetch(`http://localhost:5000/usertypecheck/${email}`)
                 .then(res => res.json())
                 .then(data => {
-                    if (data?.isAdmin == 'Yes') {
-                        setUserType(data.isAdmin)
-                    }
-                    else {
-                        setUserType(data?.userType)
-                    }
-        
+                    console.log(data);
+                    setUserType(data?.type);
+                  
+                    setLoading(false)
                 })
         }
     }, [email])

@@ -2,14 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
-const MyBookings = () => {
+const MyOrders = () => {
 
     const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
+    const url = `http://localhost:5000/orders?email=${user?.email}`;
 
-    const { data: bookings = [] } = useQuery({
-        queryKey: ['bookings', user?.email],
+    const { data: orders = [] } = useQuery({
+        queryKey: ['orders', user?.email],
         queryFn: async () => {
             const res = await fetch(url);
             const data = await res.json();
@@ -20,7 +20,7 @@ const MyBookings = () => {
 
     return (
         <div>
-            <h3 className='text-3xl mb-6'>My Bookings</h3>
+            <h3 className='text-3xl mb-6 py-6 font-bold'>My Orders</h3>
             <div className="overflow-x-auto">
                 <table className="table w-full">
 
@@ -28,14 +28,15 @@ const MyBookings = () => {
                         <tr>
                             <th></th>
                             <th>Name</th>
-                            <th>Product</th>
                             <th>Price</th>
-                            <th>Location</th>
+                            <td>Sale Status</td>
+                            <th>Tansaction-Id</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            bookings.map((booking, i) =>
+                            orders?.map((booking, i) =>
                                 <tr key={booking._id}>
                                     <th>{i + 1}</th>
                                     <td>{booking.buyer_name}</td>
@@ -52,4 +53,4 @@ const MyBookings = () => {
     );
 };
 
-export default MyBookings;
+export default MyOrders;
