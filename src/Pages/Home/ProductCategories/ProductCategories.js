@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import Loading from '../../Shared/Loading/Loading';
 
 const ProductCategories = () => {
@@ -38,7 +38,7 @@ const ProductCategories = () => {
             <h2 className='text-4xl mb-6'>Product Categories</h2>
             <div>
                 {
-                    productCategories.map(productCategory => <button className="btn btn-outline w-full" key={productCategory._id}><Link to={`/categoryproducts/${productCategory.category_name}`}>{productCategory.category_name}</Link></button>
+                    productCategories.map(productCategory => <button className="btn btn-outline w-full" key={productCategory._id}><Link to={`/categoryproducts/${productCategory._id}`}>{productCategory.category_name}</Link></button>
                     )
                 }
             </div>

@@ -9,23 +9,42 @@ const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('');
-
     const navigate = useNavigate();
-
     const handleSignUp = data => {
-        // console.log(data);
         setSignUpError('');
+        console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 toast('user created successfully');
                 const userInfo = {
                     displayName: data.name
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        navigate('/');
+                        const userData = {
+                            name: user?.displayName,
+                            email: user?.email,
+                            type:data?.userType,
+                            isVerified: 'No',
+                        }
+
+                        fetch('http://localhost:5000/adduser', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(userData)
+                        })
+                            .then(res => {
+                                if (res.acknowledged === true) {
+                                    navigate('/');
+                                }
+                            })
+                            .then(error => {
+                                console.log(error);
+                            })
+
                     })
                     .catch(error => console.log(error));
             })
@@ -36,8 +55,8 @@ const SignUp = () => {
     }
 
     return (
-        <div className='h-[800px] flex justify-center items-center'>
-            <div className='w-96 p-7'>
+        <div className='flex justify-center p-4'>
+            <div className='w-96 p-7 shadow'>
                 <h2 className='text-xl text-center'>Sign Up</h2>
                 <form onSubmit={handleSubmit(handleSignUp)}>
 
@@ -77,11 +96,25 @@ const SignUp = () => {
                             className="input input-bordered w-full max-w-xs" />
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    {/* <select {...register("category", { required: true })}>
-                        <option value="">Select...</option>
-                        <option value="A">Option A</option>
-                        <option value="B">Option B</option>
-                    </select> */}
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">User Type</span>
+                        </label>
+                        <div className='flex gap-4' >
+                            <div className='flex items-center gap-1'>
+                                <input type="radio" name="radio-1" className="radio" {...register("userType", { required: "User type is required" })} value="Buyer" checked />
+                                <span>Buyer</span>
+                            </div>
+                            <div className='flex items-center gap-1'>
+                                <input type="radio" name="radio-1" className="radio" {...register("userType", { required: "User type is required" })} value="Seller" />
+                                <span>Seller</span>
+                            </div>
+                            {
+                                errors.userType && <p className='text-red-500 my-1'>{errors.userType.message}*</p>
+                            }
+
+                        </div>
+                    </div>
 
                     <input className='btn btn-active w-full mt-4' value="Sign Up" type="submit" />
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}
