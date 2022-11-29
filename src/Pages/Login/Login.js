@@ -1,27 +1,51 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
+
 
 const Login = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
     // const [data, setData] = useState('');
-    const { signIn } = useContext(AuthContext);
+    const { signIn, googleSignin } = useContext(AuthContext);
 
     const [loginError, setLoginError] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
     const from = location.state?.from?.pathname || '/';
+    const handleGoogleSign = () => {
+        googleSignin()
+            .then(result => {
+                toast.success('Signin successfully!');
+                const user = result.user;
+                const userData = {
+                    name: user?.displayName,
+                    email: user?.email,
+                    type: 'Buyer',
+                    isVerified: 'No',
+                }
+                fetch('http://localhost:5000/adduser', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                    })
+                navigate(from, { replace: true });
+            })
+    }
 
     const handleLogin = data => {
-        console.log(data);
         setLoginError('');
         signIn(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 navigate(from, { replace: true });
             })
             .catch(error => {
@@ -63,11 +87,6 @@ const Login = () => {
                         </label>
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    {/* <select {...register("category", { required: true })}>
-                        <option value="">Select...</option>
-                        <option value="A">Option A</option>
-                        <option value="B">Option B</option>
-                    </select> */}
 
                     <input className='btn btn-active w-full' value="Login" type="submit" />
                     <div>
@@ -75,7 +94,7 @@ const Login = () => {
                     </div>
                 </form>
                 <p className='my-2'>New to this website?<Link className='text-primary font-bold' to="/signup">Create new account</Link></p>
-                <button className='btn btn-outline w-full'>Continue with Google</button>
+                <button onClick={handleGoogleSign} className='btn btn-outline w-full'>Continue with Google</button>
             </div>
         </div>
     );
