@@ -7,12 +7,35 @@ import { AuthContext } from '../../contexts/AuthProvider';
 const SignUp = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, updateUser, googleSignin } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('');
     const navigate = useNavigate();
+    const handleGoogleSign = () => {
+        googleSignin()
+            .then(result => {
+                toast.success('Signin successfully!')
+                const user = result.user;
+                const userData = {
+                    name: user?.displayName,
+                    email: user?.email,
+                    type: 'Buyer',
+                    isVerified: 'No',
+                }
+                fetch('http://localhost:5000/adduser', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        navigate('/')
+                    })
+            })
+    }
     const handleSignUp = data => {
         setSignUpError('');
-        console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
@@ -25,7 +48,7 @@ const SignUp = () => {
                         const userData = {
                             name: user?.displayName,
                             email: user?.email,
-                            type:data?.userType,
+                            type: data?.userType,
                             isVerified: 'No',
                         }
 
@@ -36,13 +59,9 @@ const SignUp = () => {
                             },
                             body: JSON.stringify(userData)
                         })
-                            .then(res => {
-                                if (res.acknowledged === true) {
-                                    navigate('/');
-                                }
-                            })
-                            .then(error => {
-                                console.log(error);
+                            .then(res => res.json())
+                            .then(data => {
+                                navigate('/')
                             })
 
                     })
@@ -120,7 +139,7 @@ const SignUp = () => {
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}
                 </form>
                 <p className='my-2'>Already have an account?<Link className='text-primary font-bold' to="/login">Please Login</Link></p>
-                <button className='btn btn-outline w-full'>Continue with Google</button>
+                <button onClick={handleGoogleSign} className='btn btn-outline w-full'>Continue with Google</button>
             </div>
         </div>
     );
