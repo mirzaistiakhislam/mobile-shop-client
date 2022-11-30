@@ -4,13 +4,16 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import useUserType from '../../../Hooks/useUserType';
 import Loading from '../../Shared/Loading/Loading';
 
 const AddProduct = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
     const { user } = useContext(AuthContext);
+    const [userType] = useUserType(user?.email);
     const imageHostKey = process.env.REACT_APP_imgbb_key;
     const { data: productCategories = [], isLoading } = useQuery({
         queryKey: ['productCategories'],
@@ -24,6 +27,9 @@ const AddProduct = () => {
 
     if (isLoading) {
         return <div className='mt-40'><Loading></Loading></div>
+    }
+    if (userType !== 'Seller') {
+        return navigate('/dashboard');
     }
     function formatDate(date) {
         var hours = date.getHours();

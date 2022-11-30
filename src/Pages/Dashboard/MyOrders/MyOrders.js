@@ -1,10 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import useUserType from '../../../Hooks/useUserType';
 
 const MyOrders = () => {
 
     const { user } = useContext(AuthContext);
+    const [userType, isLoading] = useUserType(user?.email);
+    const navigate = useNavigate()
 
     const url = `http://localhost:5000/orders?email=${user?.email}`;
 
@@ -14,7 +18,6 @@ const MyOrders = () => {
             const res = await fetch(url, {
                 headers: {
                     authorization: `barer ${localStorage.getItem('accessToken')}`
-                    
                 }
             });
             const data = await res.json();
@@ -22,7 +25,9 @@ const MyOrders = () => {
 
         }
     })
-    
+    if (userType !== 'Buyer') {
+        return navigate('/dashboard');
+    }
 
     return (
         <div className='w-[98%] mx-auto'>
@@ -54,14 +59,14 @@ const MyOrders = () => {
                                         <td>{order.salesStatus}</td>
                                         {
                                             order?.salesStatus === 'Available' && order?.payment === 'No' && <td><button className='btn btn-warning btn-sm '>Pay</button></td>
-                                           
-                                       }
+
+                                        }
                                         {
                                             order?.payment === 'Yes' && <td><button className='text-green-500 text-base'>Payment done</button></td>
-                                           
-                                       }
+
+                                        }
                                     </tr>)
-                             }
+                            }
                         </tbody>
                     </table>
                 </div>

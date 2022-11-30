@@ -1,9 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthProvider';
+import useUserType from '../../../Hooks/useUserType';
 
 
 const AllSeller = () => {
+
+    
+    const { user } = useContext(AuthContext);
+    const [userType, isLoading] = useUserType(user?.email);
+    const navigate = useNavigate();
 
     const url = `http://localhost:5000/allsellers`;
 
@@ -21,6 +29,9 @@ const AllSeller = () => {
             return data;
         }
     })
+    if (userType !== 'Admin') {
+        return navigate('/dashboard');
+    }
     const verifySeller = (id) => {
         const data = {
             id: id

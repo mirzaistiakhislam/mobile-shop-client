@@ -1,9 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthProvider';
+import useUserType from '../../../Hooks/useUserType';
 
 
 const ReportedItems = () => {
+    const { user } = useContext(AuthContext);
+    const [userType, isLoading] = useUserType(user?.email);
+    const navigate = useNavigate();
 
     const url = `http://localhost:5000/reporteditems`;
 
@@ -19,7 +25,9 @@ const ReportedItems = () => {
             return data;
         }
     })
-
+    if (userType !== 'Admin') {
+        return navigate('/dashboard');
+    }
     const deleteProduct = (id) => {
         const data = {
             id: id

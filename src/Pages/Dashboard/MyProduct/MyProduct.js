@@ -1,12 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import useUserType from '../../../Hooks/useUserType';
 
 const MyProduct = () => {
     const { user } = useContext(AuthContext);
+    const [userType, isLoading] = useUserType(user?.email);
 
     const url = `http://localhost:5000/myproducts/${user?.email}`;
+    const navigate = useNavigate();
 
     const { data: myproducts = null, refetch } = useQuery({
         queryKey: ['myproducts', user?.email],
@@ -20,6 +24,9 @@ const MyProduct = () => {
             return data;
         }
     })
+    if (userType !== 'Seller') {
+        return navigate('/dashboard');
+    }
     const deleteProduct = (id) => {
         const data = {
             id: id
