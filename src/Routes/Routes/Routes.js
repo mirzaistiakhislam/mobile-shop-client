@@ -39,7 +39,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/category/:id',
-                loader: ({ params }) => fetch(`http://localhost:5000/categoryproducts/${params.id}`, {
+                loader: ({ params }) => fetch(`https://phone-buy-and-sell-server.vercel.app/categoryproducts/${params.id}`, {
                     headers: {
                         'content-type': 'application/json',
                         authorization: `barer ${localStorage.getItem('accessToken')}`
@@ -84,7 +84,7 @@ const router = createBrowserRouter([
         ]
     }, {
         path: '*',
-        element:<Error></Error>
+        element: <Error></Error>
     }
 ])
 

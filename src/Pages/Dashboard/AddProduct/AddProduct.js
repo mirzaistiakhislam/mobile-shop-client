@@ -18,7 +18,7 @@ const AddProduct = () => {
     const { data: productCategories = [], isLoading } = useQuery({
         queryKey: ['productCategories'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/categories');
+            const res = await fetch('https://phone-buy-and-sell-server.vercel.app/categories');
             const data = await res.json();
             return data;
 
@@ -70,7 +70,7 @@ const AddProduct = () => {
                 if (imgbb.success) {
                     let imgUrl = imgbb.data.display_url;
                     data['image'] = imgUrl;
-                    fetch(`http://localhost:5000/addproduct`, {
+                    fetch(`https://phone-buy-and-sell-server.vercel.app/addproduct`, {
                         method: 'POST',
 
                         headers: {

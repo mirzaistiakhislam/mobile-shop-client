@@ -10,7 +10,7 @@ const MyOrders = () => {
     const [userType, isLoading] = useUserType(user?.email);
     const navigate = useNavigate()
 
-    const url = `http://localhost:5000/orders?email=${user?.email}`;
+    const url = `https://phone-buy-and-sell-server.vercel.app/orders?email=${user?.email}`;
 
     const { data: orders = [] } = useQuery({
         queryKey: ['orders', user?.email],

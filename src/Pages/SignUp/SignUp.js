@@ -8,12 +8,12 @@ import getToken from '../../Hooks/useToken';
 const SignUp = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { user,createUser, updateUser, googleSignin } = useContext(AuthContext);
+    const { user, createUser, updateUser, googleSignin } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
         if (user) {
-                navigate('/')
+            navigate('/')
         }
     }, [user])
     const handleGoogleSign = () => {
@@ -27,7 +27,7 @@ const SignUp = () => {
                     type: 'Buyer',
                     isVerified: 'No',
                 }
-                fetch('http://localhost:5000/adduser', {
+                fetch('https://phone-buy-and-sell-server.vercel.app/adduser', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -59,7 +59,7 @@ const SignUp = () => {
                             isVerified: 'No',
                         }
 
-                        fetch('http://localhost:5000/adduser', {
+                        fetch('https://phone-buy-and-sell-server.vercel.app/adduser', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'

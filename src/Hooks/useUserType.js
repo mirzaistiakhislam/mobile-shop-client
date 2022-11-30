@@ -9,7 +9,7 @@ const useUserType = email => {
     useEffect(() => {
         if (email) {
             console.log(`${localStorage.getItem('accessToken')}`)
-            fetch(`http://localhost:5000/usertypecheck/${email}`, {
+            fetch(`https://phone-buy-and-sell-server.vercel.app/usertypecheck/${email}`, {
                 headers: {
                     'content-type': 'application/json',
                     authorization: `barer ${localStorage.getItem('accessToken')}`
@@ -17,7 +17,7 @@ const useUserType = email => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    
+
                     setUserType(data?.type);
                     setLoading(false)
                 })

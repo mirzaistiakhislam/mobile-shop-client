@@ -9,7 +9,7 @@ const MyProduct = () => {
     const { user } = useContext(AuthContext);
     const [userType, isLoading] = useUserType(user?.email);
 
-    const url = `http://localhost:5000/myproducts/${user?.email}`;
+    const url = `https://phone-buy-and-sell-server.vercel.app/myproducts/${user?.email}`;
     const navigate = useNavigate();
 
     const { data: myproducts = null, refetch } = useQuery({
@@ -32,7 +32,7 @@ const MyProduct = () => {
             id: id
         }
 
-        fetch(`http://localhost:5000/deleteproduct`, {
+        fetch(`https://phone-buy-and-sell-server.vercel.app/deleteproduct`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',
@@ -56,7 +56,7 @@ const MyProduct = () => {
             id: id
         }
 
-        fetch(`http://localhost:5000/makeadvertise`, {
+        fetch(`https://phone-buy-and-sell-server.vercel.app/makeadvertise`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',

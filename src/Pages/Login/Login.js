@@ -17,7 +17,7 @@ const Login = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (user) {
-                navigate('/')
+            navigate('/')
         }
     }, [user])
     const from = location.state?.from?.pathname || '/';
@@ -32,7 +32,7 @@ const Login = () => {
                     type: 'Buyer',
                     isVerified: 'No',
                 }
-                fetch('http://localhost:5000/adduser', {
+                fetch('https://phone-buy-and-sell-server.vercel.app/adduser', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

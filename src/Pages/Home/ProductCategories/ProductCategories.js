@@ -10,7 +10,7 @@ const ProductCategories = () => {
     const [productCategories, setProductCategories] = useState(null)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/categories').then(res => {
+        axios.get('https://phone-buy-and-sell-server.vercel.app/categories').then(res => {
             setProductCategories(res.data);
         });
     })
@@ -18,7 +18,7 @@ const ProductCategories = () => {
 
 
     // useEffect(() => {
-    //     fetch('http://localhost:5000/categories')
+    //     fetch('https://phone-buy-and-sell-server.vercel.app/categories')
     //         .then(res => res.json())
     //         .then(data => {
     //             console.log(data);

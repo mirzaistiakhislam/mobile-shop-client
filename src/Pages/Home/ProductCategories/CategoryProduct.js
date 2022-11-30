@@ -16,7 +16,7 @@ const CategoryProduct = ({ product, setBookingProduct }) => {
             image: product.image,
         }
         console.log(reportData)
-        fetch('http://localhost:5000/addreporteditem', {
+        fetch('https://phone-buy-and-sell-server.vercel.app/addreporteditem', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

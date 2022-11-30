@@ -8,12 +8,12 @@ import useUserType from '../../../Hooks/useUserType';
 
 const AllBuyer = () => {
 
-    
+
     const { user } = useContext(AuthContext);
     const [userType, isLoading] = useUserType(user?.email);
     const navigate = useNavigate();
 
-    const url = `http://localhost:5000/allbuyers`;
+    const url = `https://phone-buy-and-sell-server.vercel.app/allbuyers`;
 
     const { data: buyers = null, refetch } = useQuery({
         queryKey: ['allbuyers'],
@@ -38,7 +38,8 @@ const AllBuyer = () => {
         fetch(`http://localhost:5000/deletebuyer`, {
             method: 'DELETE',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `barer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify(data)
         })

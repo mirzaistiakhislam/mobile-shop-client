@@ -8,20 +8,20 @@ import useUserType from '../../../Hooks/useUserType';
 
 const AllSeller = () => {
 
-    
+
     const { user } = useContext(AuthContext);
     const [userType, isLoading] = useUserType(user?.email);
     const navigate = useNavigate();
 
-    const url = `http://localhost:5000/allsellers`;
+    const url = `https://phone-buy-and-sell-server.vercel.app/allsellers`;
 
     const { data: sellers = null, refetch } = useQuery({
         queryKey: ['allsellers'],
         queryFn: async () => {
             const res = await fetch(url, {
-                
+
                 headers: {
-                
+
                     authorization: `barer ${localStorage.getItem('accessToken')}`
                 }
             });
@@ -36,7 +36,7 @@ const AllSeller = () => {
         const data = {
             id: id
         }
-        fetch(`http://localhost:5000/makeadverify`, {
+        fetch(`https://phone-buy-and-sell-server.vercel.app/makeadverify`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',
@@ -59,7 +59,7 @@ const AllSeller = () => {
             id: id
         }
 
-        fetch(`http://localhost:5000/deleteseller`, {
+        fetch(`https://phone-buy-and-sell-server.vercel.app/deleteseller`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',

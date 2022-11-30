@@ -11,7 +11,7 @@ const ReportedItems = () => {
     const [userType, isLoading] = useUserType(user?.email);
     const navigate = useNavigate();
 
-    const url = `http://localhost:5000/reporteditems`;
+    const url = `https://phone-buy-and-sell-server.vercel.app/reporteditems`;
 
     const { data: reportedItems = null, refetch } = useQuery({
         queryKey: ['reportedItems'],
@@ -33,7 +33,7 @@ const ReportedItems = () => {
             id: id
         }
 
-        fetch(`http://localhost:5000/deletereporteditem`, {
+        fetch(`https://phone-buy-and-sell-server.vercel.app/deletereporteditem`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',

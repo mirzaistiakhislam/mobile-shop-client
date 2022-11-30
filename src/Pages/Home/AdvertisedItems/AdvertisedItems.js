@@ -3,7 +3,7 @@ import React from 'react';
 
 const AdvertisedItems = () => {
 
-    const url = `http://localhost:5000/advertisedItems`;
+    const url = `https://phone-buy-and-sell-server.vercel.app/advertisedItems`;
 
     const { data: advertisedItems = [] } = useQuery({
         queryKey: ['advertisedItems'],
