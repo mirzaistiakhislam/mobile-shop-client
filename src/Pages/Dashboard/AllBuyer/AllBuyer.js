@@ -35,7 +35,7 @@ const AllBuyer = () => {
             id: id
         }
 
-        fetch(`http://localhost:5000/deletebuyer`, {
+        fetch(`https://phone-buy-and-sell-server.vercel.app/deletebuyer`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',

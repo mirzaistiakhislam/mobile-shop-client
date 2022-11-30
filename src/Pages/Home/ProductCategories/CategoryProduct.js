@@ -39,7 +39,7 @@ const CategoryProduct = ({ product, setBookingProduct }) => {
     return (
         <div >
             <div className="card  shadow-xl flex flex-col gap-4">
-                <figure><img src={image} alt="Album" className=' rounded border-2 border-rose-500' /></figure>
+                <figure><img src={image} alt="Album" className=' rounded border-rose-500' /></figure>
                 <div className="card-body">
                     <h2 className='text-xl'><span className='text-xl font-bold'>Author Name:</span> {authorName}</h2>
                     <h2 className='text-xl'><span className='text-xl font-bold'>Product Name:</span> {product.productName}</h2>
