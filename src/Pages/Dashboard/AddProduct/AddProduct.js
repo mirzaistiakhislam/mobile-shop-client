@@ -220,7 +220,7 @@ const AddProduct = () => {
                             }
                         </div>
 
-                        <input className='btn btn-active w-full mt-4' value="Sign Up" type="submit" />
+                        <input className='btn btn-active w-full mt-4' value="Add product" type="submit" />
 
                     </form>
 
