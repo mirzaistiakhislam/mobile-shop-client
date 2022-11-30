@@ -1,4 +1,14 @@
-#PhoneBuyAndSell
+# MobileShop
+
+- adminEmail: admin@gmail.com
+- adminPassword: 123456
+
+- User , buyer can create account and login (email and password , google signin).
+- user can order any mobile that are available.
+- Seller add new product and view all product , can delete any product.
+- Admin can delete any user and remove reported products.
+- user can pay the product using stripe.
+- Used Technology: HTML , CSS , React , JavaScript , Express , Nodejs , Firebase, Mongodb.  
 
 # Getting Started with Create React App
 
