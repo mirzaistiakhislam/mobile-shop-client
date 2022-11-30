@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -10,12 +10,16 @@ const Login = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
     // const [data, setData] = useState('');
-    const { signIn, googleSignin } = useContext(AuthContext);
+    const { user, signIn, googleSignin } = useContext(AuthContext);
 
     const [loginError, setLoginError] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
-
+    useEffect(() => {
+        if (user) {
+                navigate('/')
+        }
+    }, [user])
     const from = location.state?.from?.pathname || '/';
     const handleGoogleSign = () => {
         googleSignin()
@@ -40,7 +44,7 @@ const Login = () => {
                         getToken(userData?.email);
                         navigate(from, { replace: true });
                     })
-                
+
             })
     }
 

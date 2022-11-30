@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,9 +8,14 @@ import getToken from '../../Hooks/useToken';
 const SignUp = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { createUser, updateUser, googleSignin } = useContext(AuthContext);
+    const { user,createUser, updateUser, googleSignin } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('');
     const navigate = useNavigate();
+    useEffect(() => {
+        if (user) {
+                navigate('/')
+        }
+    }, [user])
     const handleGoogleSign = () => {
         googleSignin()
             .then(result => {
