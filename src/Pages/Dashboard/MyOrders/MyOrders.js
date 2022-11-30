@@ -17,6 +17,7 @@ const MyOrders = () => {
 
         }
     })
+    
 
     return (
         <div className='w-[98%] mx-auto'>
@@ -36,7 +37,26 @@ const MyOrders = () => {
                             </tr>
                         </thead>
                         <tbody>
-                             
+                            {
+                                orders?.map((order, i) =>
+                                    <tr key={order._id}>
+                                        <th>{i + 1}</th>
+                                        <td>
+                                            <img src={order.image} className='w-16 h-16' alt="" />
+                                        </td>
+                                        <td>{order.productName}</td>
+                                        <td>{order.resalePrice}</td>
+                                        <td>{order.salesStatus}</td>
+                                        {
+                                            order?.salesStatus === 'Available' && order?.payment === 'No' && <td><button className='btn btn-warning btn-sm '>Pay</button></td>
+                                           
+                                       }
+                                        {
+                                            order?.payment === 'Yes' && <td><button className='text-green-500 text-base'>Payment done</button></td>
+                                           
+                                       }
+                                    </tr>)
+                             }
                         </tbody>
                     </table>
                 </div>
