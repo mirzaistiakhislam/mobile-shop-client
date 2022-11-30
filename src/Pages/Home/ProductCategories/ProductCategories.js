@@ -1,28 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Loading from '../../Shared/Loading/Loading';
-
 const ProductCategories = () => {
 
     // const [productCategories, setProductCategories] = useState([]);
     // const products = useLoaderData();
     // console.log(products);
 
+    const [productCategories, setProductCategories] = useState(null)
 
-    const { data: productCategories = [], isLoading } = useQuery({
-        queryKey: ['productCategories'],
-        queryFn: async () => {
-            const res = await fetch('http://localhost:5000/categories');
-            const data = await res.json();
-            return data;
+    useEffect(() => {
+        axios.get('http://localhost:5000/categories').then(res => {
+            setProductCategories(res.data);
+        });
+    })
 
-        }
-    });
 
-    if (isLoading) {
-        return <Loading></Loading>
-    }
 
     // useEffect(() => {
     //     fetch('http://localhost:5000/categories')

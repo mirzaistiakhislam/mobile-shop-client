@@ -32,7 +32,7 @@ const Footer = () => {
                 <div >
                     <small className='text-lg text-center'>&copy; Copyright 2022, Buy and Sell</small>
                 </div>
-               
+
             </footer>
         </div>
     );
