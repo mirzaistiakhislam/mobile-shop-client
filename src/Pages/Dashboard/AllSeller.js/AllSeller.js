@@ -10,7 +10,13 @@ const AllSeller = () => {
     const { data: sellers = null, refetch } = useQuery({
         queryKey: ['allsellers'],
         queryFn: async () => {
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                
+                headers: {
+                
+                    authorization: `barer ${localStorage.getItem('accessToken')}`
+                }
+            });
             const data = await res.json();
             return data;
         }
@@ -22,7 +28,9 @@ const AllSeller = () => {
         fetch(`http://localhost:5000/makeadverify`, {
             method: 'PUT',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `barer ${localStorage.getItem('accessToken')}`
+
             },
             body: JSON.stringify(data)
         })
@@ -43,7 +51,9 @@ const AllSeller = () => {
         fetch(`http://localhost:5000/deleteseller`, {
             method: 'DELETE',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `barer ${localStorage.getItem('accessToken')}`
+
             },
             body: JSON.stringify(data)
         })

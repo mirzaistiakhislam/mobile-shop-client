@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
+import getToken from '../../Hooks/useToken';
 
 const SignUp = () => {
 
@@ -30,6 +31,7 @@ const SignUp = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
+                        getToken(userData?.email);
                         navigate('/')
                     })
             })
@@ -61,6 +63,7 @@ const SignUp = () => {
                         })
                             .then(res => res.json())
                             .then(data => {
+                                getToken(userData?.email);
                                 navigate('/')
                             })
 

@@ -19,7 +19,8 @@ const CategoryProduct = ({ product, setBookingProduct }) => {
         fetch('http://localhost:5000/addreporteditem', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `barer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify(reportData)
         })

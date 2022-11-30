@@ -7,13 +7,14 @@ import Navbar from '../Pages/Shared/Navbar/Navbar';
 
 const DashboardLayout = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
     const [userType, isLoading] = useUserType(user?.email);
     const navigate = useNavigate()
 
     if (isLoading === true) {
         return <Loading></Loading>
     } else {
+         
         // if (userType == 'Admin') {
         //     navigate('/dashboard/allsellers')
         // }

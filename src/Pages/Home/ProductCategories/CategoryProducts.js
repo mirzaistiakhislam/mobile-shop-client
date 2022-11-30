@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthProvider';
+import useUserType from '../../../Hooks/useUserType';
 import BookingModal from './BookingModal';
 import CategoryProduct from './CategoryProduct';
 
 const CategoryProducts = () => {
-
-    const products = useLoaderData();
-    console.log(products)
+    const { user, logOut } = useContext(AuthContext);
+    
+    const products = useLoaderData();   
     let categoryName = '';
     if (products?.categoryName) {
-        categoryName = products.categoryName;
-        console.log(categoryName);
+        categoryName = products?.categoryName;
     }
     else {
-        categoryName = products[0].categoryName;
-
+        categoryName = products[0]?.categoryName;
     }
     const [bookingProduct, setBookingProduct] = useState(null);
-
 
     return (
         <div className='w-[98%] mx-auto py-6'>

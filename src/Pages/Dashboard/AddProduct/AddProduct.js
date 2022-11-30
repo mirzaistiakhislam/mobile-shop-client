@@ -30,7 +30,7 @@ const AddProduct = () => {
         var minutes = date.getMinutes();
         var ampm = hours >= 12 ? 'pm' : 'am';
         hours = hours % 12;
-        hours = hours ? hours : 12; 
+        hours = hours ? hours : 12;
         minutes = minutes < 10 ? '0' + minutes : minutes;
         var strTime = hours + ':' + minutes + ' ' + ampm;
         return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
@@ -66,9 +66,12 @@ const AddProduct = () => {
                     data['image'] = imgUrl;
                     fetch(`http://localhost:5000/addproduct`, {
                         method: 'POST',
+
                         headers: {
-                            'content-type': 'application/json'
-                        },
+                            'content-type': 'application/json',
+                            authorization: `barer ${localStorage.getItem('accessToken')}`
+                        }
+                        ,
                         body: JSON.stringify(data)
                     })
                         .then(res => res.json())

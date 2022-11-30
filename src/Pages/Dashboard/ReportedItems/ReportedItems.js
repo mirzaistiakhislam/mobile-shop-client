@@ -10,7 +10,11 @@ const ReportedItems = () => {
     const { data: reportedItems = null, refetch } = useQuery({
         queryKey: ['reportedItems'],
         queryFn: async () => {
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                headers: {
+                    authorization: `barer ${localStorage.getItem('accessToken')}`
+                }
+            });
             const data = await res.json();
             return data;
         }
@@ -24,7 +28,8 @@ const ReportedItems = () => {
         fetch(`http://localhost:5000/deletereporteditem`, {
             method: 'DELETE',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `barer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify(data)
         })

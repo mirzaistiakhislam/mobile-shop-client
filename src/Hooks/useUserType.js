@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const useUserType = email => {
+    const { logOut } = useContext(AuthContext);
     const [userType, setUserType] = useState(false);
     const [isLoading, setLoading] = useState(true);
-    console.log(email);
 
     useEffect(() => {
         if (email) {
-            fetch(`http://localhost:5000/usertypecheck/${email}`)
+            console.log(`${localStorage.getItem('accessToken')}`)
+            fetch(`http://localhost:5000/usertypecheck/${email}`, {
+                headers: {
+                    'content-type': 'application/json',
+                    authorization: `barer ${localStorage.getItem('accessToken')}`
+                },
+            })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    
                     setUserType(data?.type);
-                  
                     setLoading(false)
                 })
         }

@@ -33,7 +33,12 @@ const router = createBrowserRouter([
             },
             {
                 path: '/category/:id',
-                loader: ({ params }) => fetch(`http://localhost:5000/categoryproducts/${params.id}`),
+                loader: ({ params }) => fetch(`http://localhost:5000/categoryproducts/${params.id}`, {
+                    headers: {
+                        'content-type': 'application/json',
+                        authorization: `barer ${localStorage.getItem('accessToken')}`
+                    },
+                }),
                 element: <PrivateRoute><CategoryProducts></CategoryProducts></PrivateRoute>
             }
         ]

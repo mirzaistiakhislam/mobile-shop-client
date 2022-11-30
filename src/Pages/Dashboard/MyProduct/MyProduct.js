@@ -11,7 +11,11 @@ const MyProduct = () => {
     const { data: myproducts = null, refetch } = useQuery({
         queryKey: ['myproducts', user?.email],
         queryFn: async () => {
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                headers: {
+                    authorization: `barer ${localStorage.getItem('accessToken')}`
+                }
+            });
             const data = await res.json();
             return data;
         }
@@ -24,7 +28,8 @@ const MyProduct = () => {
         fetch(`http://localhost:5000/deleteproduct`, {
             method: 'DELETE',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `barer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify(data)
         })
@@ -47,7 +52,8 @@ const MyProduct = () => {
         fetch(`http://localhost:5000/makeadvertise`, {
             method: 'PUT',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `barer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify(data)
         })

@@ -10,12 +10,16 @@ const AllBuyer = () => {
     const { data: buyers = null, refetch } = useQuery({
         queryKey: ['allbuyers'],
         queryFn: async () => {
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                headers: {
+                    authorization: `barer ${localStorage.getItem('accessToken')}`
+                }
+            });
             const data = await res.json();
             return data;
         }
     })
-    
+
     const deleteBuyer = (id) => {
         const data = {
             id: id
@@ -62,7 +66,7 @@ const AllBuyer = () => {
                                         <td>{buyer.name}</td>
                                         <td>{buyer.email}</td>
                                         <td>{buyer.type}</td>
-                                    
+
                                         <td><button onClick={() => deleteBuyer(buyer._id)} className='btn btn-warning btn-sm '>Delete</button></td>
                                     </tr>)
                             }
