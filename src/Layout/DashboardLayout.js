@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
 import useUserType from '../Hooks/useUserType';
+import Footer from '../Pages/Shared/Footer/Footer';
 import Loading from '../Pages/Shared/Loading/Loading';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 
@@ -63,6 +64,7 @@ const DashboardLayout = () => {
 
                 </div>
             </div>
+            <Footer></Footer>
         </div>
     );
 };

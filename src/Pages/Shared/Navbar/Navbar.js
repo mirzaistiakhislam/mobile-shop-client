@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import logo from '../../../assets/logo.png'
 
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext);
 
     const handleLogOut = () => {
-      
+
         logOut()
             .then(() => { })
             .catch(error => console.log(error));
@@ -34,7 +35,7 @@ const Navbar = () => {
                         {menuItems}
                     </ul>
                 </div>
-                <Link to="/" className="btn btn-ghost normal-case text-xl">Phone Buy & Sell </Link>
+                <Link to="/" className=" ml-4 normal-case text-xl"> <img src={logo} alt="" className='h-[50px] ' /> </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
