@@ -28,7 +28,7 @@ const ProductCategories = () => {
 
     return (
         <div className='my-16 w-[95%] mx-auto'>
-            <h2 className='text-4xl font-semibold mb-6'>Product Categories</h2>
+            <h2 className='text-3xl font-bold mb-6 text-center py-5'>Product Categories</h2>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                 {
                     productCategories?.map(productCategory =>

@@ -22,7 +22,7 @@ const AdvertisedItems = () => {
     return (
         <>
             {
-                advertisedItems.length > 0 && <div className='w-[98%] mx-auto'>
+                advertisedItems.length > 0 && <div className='w-[98%] mx-auto mb-16'>
                     <h3 className='text-3xl mb-6 py-6 font-bold text-center'>Advertise Items</h3>
                     {
                         advertisedItems && advertisedItems?.length > 0 ?
