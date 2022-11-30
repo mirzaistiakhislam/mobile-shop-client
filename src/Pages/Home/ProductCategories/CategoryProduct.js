@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import useUserType from '../../../Hooks/useUserType';
 
@@ -7,8 +8,31 @@ const CategoryProduct = ({ product, setBookingProduct }) => {
     const { user } = useContext(AuthContext);
     const [userType] = useUserType(user?.email);
     const reportItem = (product) => {
-    
-}
+        const reportData = {
+            productName: product.productName,
+            reporterName: user?.displayName,
+            reporterEmail: user?.email,
+            productId: product._id,
+            image: product.image,
+        }
+        console.log(reportData)
+        fetch('http://localhost:5000/addreporteditem', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(reportData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    toast.success('Report confirmed');
+                }
+                if (data.status) {
+                    toast.error(data.status)
+                }
+            })
+    }
 
     const { _id, image, location, resalePrice, originalPrice, publishedDate, description, authorName, purchaseYear, usedYear } = product;
     return (
